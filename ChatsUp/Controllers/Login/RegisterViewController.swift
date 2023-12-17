@@ -19,7 +19,7 @@ class RegisterViewController: UIViewController {
     
     private let imageView : UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.circleB")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = .gray
         imageView.contentMode  = .scaleAspectFill
         imageView.layer.masksToBounds = true
@@ -210,7 +210,7 @@ class RegisterViewController: UIViewController {
         guard let firstName = firstNameField.text,
               let lastName = lastNameField.text,
               let email = emailField.text,
-                let password = passwordField.text,
+              let password = passwordField.text,
               !email.isEmpty,
               !password.isEmpty,
               !firstName.isEmpty,
@@ -222,14 +222,19 @@ class RegisterViewController: UIViewController {
               }
         // Firebase Log In
         
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { AuthDataResult, error in
-            guard let result = AuthDataResult, error == nil else {
-                //print("Error cureating user")
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { [weak self] AuthDataResult, error  in
+            guard let strongSelf = self else {
+                return
+            }
+            guard AuthDataResult != nil, error == nil else {
+                print("Error cureating user")
                 return
             }
             
-            let user = result.user
-            //print("Created User : \(user)")
+            DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: <#T##String#>,
+                                                                lastName: <#T##String#>,
+                                                                emailAddress: <#T##String#>))
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             
         })
     }

@@ -48,6 +48,7 @@
 		FB1DE2BA2AFF81C700050355 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB1DE2B82AFF81C700050355 /* Main.storyboard */; };
 		FB1DE2BC2AFF81C800050355 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB1DE2BB2AFF81C800050355 /* Assets.xcassets */; };
 		FB1DE2BF2AFF81C800050355 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB1DE2BD2AFF81C800050355 /* LaunchScreen.storyboard */; };
+		FB4032AA2B2F8290008E50DE /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4032A92B2F8290008E50DE /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		FB1DE2BB2AFF81C800050355 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB1DE2BE2AFF81C800050355 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB1DE2C02AFF81C800050355 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB4032A92B2F8290008E50DE /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				FB1DE2B22AFF81C700050355 /* AppDelegate.swift */,
 				FB1DE2B42AFF81C700050355 /* SceneDelegate.swift */,
 				FB12692A2B021C8D00CE482D /* Extensions.swift */,
+				FB4032A92B2F8290008E50DE /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB12691E2B020AA100CE482D /* LoginViewController.swift in Sources */,
+				FB4032AA2B2F8290008E50DE /* DatabaseManager.swift in Sources */,
 				FB1269202B020B4200CE482D /* RegisterViewController.swift in Sources */,
 				FB1269262B020B9200CE482D /* NewConversaitonViewController.swift in Sources */,
 				FB1DE2B72AFF81C700050355 /* ConversationsViewController.swift in Sources */,
