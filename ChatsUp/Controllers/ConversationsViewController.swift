@@ -13,8 +13,9 @@ class ConversationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let blueGreenColor = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
-        view.backgroundColor = blueGreenColor
+        _ = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
+        
+        
         
         //DatabaseManager.shared.test()
         
