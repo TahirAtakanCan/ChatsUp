@@ -8,6 +8,8 @@
 import UIKit
 import FirebaseAuth
 
+
+
 class RegisterViewController: UIViewController {
 
     private let scrollView : UIScrollView = {
@@ -223,33 +225,21 @@ class RegisterViewController: UIViewController {
         
         // Firebase Log In
         
-        DatabaseManager.shared.userExists(with: email, completion: { [weak self] exits in
-            
-            guard let strongSelf = self else {
-                return
-            }
-            guard !exits else {
-                strongSelf.alertUserLoginError(message: "Looks like a user account for that email address alread")
-                return
-            }
-            
-            
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { AuthDataResult, error  in
                 
-                guard AuthDataResult != nil, error == nil else {
-                    print("Error cureating user")
+                guard let result = AuthDataResult,  error == nil else {
+                    print("Error creating user")
                     return
                 }
                 
-                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
-                                                                    lastName: lastName,
-                                                                    emailAddress: email))
-                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                let user = result.user
+                print("Created User: \(user)")
+                
+                
                 
             })
             
             
-        })
         
         
     }

@@ -7,9 +7,11 @@
 
 import Foundation
 import FirebaseDatabase
+import UIKit
 
 
-final class DatabaseManager {
+
+/*final class DatabaseManager {
     
     static let shared = DatabaseManager()
     
@@ -33,9 +35,10 @@ extension DatabaseManager {
     public func userExists(with email: String,
                            completion: @escaping ((Bool) -> Void )) {
         
+        let safeEmail = email.replacingOccurrences(of: ".", with: "-")
+                        .replacingOccurrences(of: "@", with: "-")
+                        //.trimmingCharacters(in: <#T##CharacterSet#>)
         
-        var safeEmail = email.replacingOccurrences(of: ".", with: "-")
-        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         
         database.child(email).observeSingleEvent(of: .value, with: {snapshot in
             guard snapshot.value as? String != nil else {
@@ -77,3 +80,4 @@ struct ChatAppUser {
     
     
 }
+*/
