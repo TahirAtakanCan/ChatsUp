@@ -225,8 +225,11 @@ class RegisterViewController: UIViewController {
         
         // Firebase Log In
         
-            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { AuthDataResult, error  in
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { [weak self] AuthDataResult, error  in
                 
+                guard let strongSelf = self else {
+                    return
+                }
                 guard let result = AuthDataResult,  error == nil else {
                     print("Error creating user")
                     return
@@ -234,9 +237,7 @@ class RegisterViewController: UIViewController {
                 
                 let user = result.user
                 print("Created User: \(user)")
-                
-                
-                
+                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })
             
             
@@ -259,10 +260,17 @@ class RegisterViewController: UIViewController {
     
     
     @objc func didTapRegister () {
-        let vc = RegisterViewController()
-        vc.title = "Create Account"
-        //vc.scrollView.tintColor = .gray
-        navigationController?.pushViewController(vc, animated: true)
+        
+        if let existingViewController = navigationController?.viewControllers.first(where: { $0 is RegisterViewController}) as? RegisterViewController {
+            navigationController?.popToViewController(existingViewController, animated: true)
+        }else {
+            let vc = RegisterViewController()
+            vc.title = "Create Account"
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        
     }
 
 }
