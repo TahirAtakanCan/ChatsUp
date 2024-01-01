@@ -17,7 +17,7 @@ class ConversationsViewController: UIViewController {
         
         
         
-        //DatabaseManager.shared.test()
+        DatabaseManager.shared.test()
         
     }
     
