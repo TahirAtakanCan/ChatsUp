@@ -230,13 +230,15 @@ class RegisterViewController: UIViewController {
                 guard let strongSelf = self else {
                     return
                 }
-                guard let result = AuthDataResult,  error == nil else {
+                guard AuthDataResult != nil ,  error == nil else {
                     print("Error creating user")
                     return
                 }
                 
-                let user = result.user
-                print("Created User: \(user)")
+                //let user = result.user
+                //print("Created User: \(user)")
+                
+                DatabaseManager.shared.insertUser(with: ChatsUpUser(firstName: firstName, lastName: lastName, emailAddress: email))
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })
             
