@@ -25,6 +25,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>GIDClintID</key>
+	<string>833177663416-3cd5gq67pao404qbho2ijca79hoqsrrj.apps.googleusercontent.com</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
