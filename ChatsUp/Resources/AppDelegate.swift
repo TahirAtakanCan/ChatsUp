@@ -7,8 +7,9 @@
 
 import UIKit
 import Firebase
+import FirebaseCore
+import FirebaseAuth
 import GoogleSignIn
-import GoogleSignInSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,20 +20,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
-        
-        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+        /*GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             if error != nil || user == nil {
-              // Show the app's signed-out state.
+                // Show the app's signed-out state.
+                print("Hata: \(error?.localizedDescription ?? "Bilinmeyen bir hata oluştu.")")
             } else {
-              // Show the app's signed-in state.
+                // Show the app's signed-in state.
             }
-          }
-        
-        
+        }
+        */
         return true
     }
     
-    
+    /*
     func application(
       _ app: UIApplication,
       open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]
@@ -48,7 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
       // If not handled by this app, return false.
       return false
+        
     }
+    */
+    
     
     
      

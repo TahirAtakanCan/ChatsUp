@@ -7,7 +7,8 @@
 
 import UIKit
 import FirebaseAuth
-
+import GoogleSignIn
+import FirebaseCore
 
 class LoginViewController: UIViewController {
 
@@ -80,6 +81,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         let blueGreenColor = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
         view.backgroundColor = blueGreenColor
         
@@ -120,17 +122,46 @@ class LoginViewController: UIViewController {
                                   height: 52)
         
         passwordField.frame = CGRect(x: 30,
-                                  y: emailField.bottom + 20,
-                                  width: scrollView.width - 60,
-                                  height: 52)
+                                     y: emailField.bottom + 20,
+                                     width: scrollView.width - 60,
+                                     height: 52)
         
         loginButton.frame = CGRect(x: 30,
-                                  y: passwordField.bottom + 20,
-                                  width: scrollView.width - 60,
-                                  height: 52)
+                                   y: passwordField.bottom + 20,
+                                   width: scrollView.width - 60,
+                                   height: 52)
         
-        
-    }
+        }
+    
+    /* GOOGLE SIGN IN 
+    @objc func googleSignInButtonTapped() {
+            // Configure the Google Sign-In request
+            if let clientID = FirebaseApp.app()?.options.clientID {
+                let config = GIDConfiguration(clientID: clientID)
+                GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { user, error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    guard let authentication = user?.authentication, let idToken = authentication.idToken else {
+                        print("Google Sign-In failed.")
+                        return
+                    }
+                    let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+                    // Use credential to sign in with Firebase
+                    Auth.auth().signIn(with: credential) { authResult, error in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            return
+                        }
+                        // User is signed in to Firebase with Google
+                        // Proceed with accessing the user's authenticated content
+                    }
+                }
+            }
+        }
+    
+    */
     
     @objc private func loginButtonTapped () {
         
