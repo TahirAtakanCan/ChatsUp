@@ -8,10 +8,45 @@
 import UIKit
 import FirebaseAuth
 
-class ConversationsViewController: UIViewController {
+class ConversationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
 
+    
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.isHidden = true
+        table.register(UITableView.self, forCellReuseIdentifier: "cell")
+        
+        return table
+    }()
+    
+    private let noConversationsLabel: UILabel = {
+       
+        let label = UILabel()
+        label.text = "No Conversation"
+        label.textAlignment = .center
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 21, weight: .medium)
+        label.isHidden = true
+        return label
+    }()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(tableView)
+        view.addSubview(noConversationsLabel)
+        setupTableView()
+        
         
         _ = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
         
@@ -23,9 +58,7 @@ class ConversationsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         _ = UserDefaults.standard.bool(forKey: "logged_in ")
-        
         validateAuth()
         
     }
@@ -41,6 +74,13 @@ class ConversationsViewController: UIViewController {
         }
     }
 
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    }
+    
+    
 
 }
 
