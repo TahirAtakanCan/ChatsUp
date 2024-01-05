@@ -7,18 +7,12 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
-class ConversationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ConversationsViewController: UIViewController  {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
-    }
+    private let spinner = JGProgressHUD(style: .dark)
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
-    }
-    
-
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -46,7 +40,7 @@ class ConversationsViewController: UIViewController, UITableViewDelegate, UITabl
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
         setupTableView()
-        
+        fetchConversation()
         
         _ = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
         
@@ -81,6 +75,28 @@ class ConversationsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     
+    private func fetchConversation() {
+        
+    }
+    
+}
 
+
+extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = "Hello World"
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 }
 
