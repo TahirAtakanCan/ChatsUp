@@ -14,6 +14,7 @@
 		FB0C5D4F2B4839D700141EFC /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = FB0C5D4E2B4839D700141EFC /* JGProgressHUD */; };
 		FB0C5D522B483ABC00141EFC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FB0C5D512B483ABC00141EFC /* SDWebImage */; };
 		FB0C5D542B483ABC00141EFC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB0C5D532B483ABC00141EFC /* SDWebImageMapKit */; };
+		FB0C5D562B48A35600141EFC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C5D552B48A35600141EFC /* ChatViewController.swift */; };
 		FB1268E22B01FFA000CE482D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FB1268E12B01FFA000CE482D /* FirebaseAnalytics */; };
 		FB1268E42B01FFA000CE482D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = FB1268E32B01FFA000CE482D /* FirebaseAnalyticsOnDeviceConversion */; };
 		FB1268E62B01FFA000CE482D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FB1268E52B01FFA000CE482D /* FirebaseAnalyticsSwift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		FB0C5D402B47E46C00141EFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FB0C5D552B48A35600141EFC /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		FB12691D2B020AA100CE482D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FB12691F2B020B4200CE482D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		FB1269212B020B6600CE482D /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				FB1269252B020B9200CE482D /* NewConversaitonViewController.swift */,
 				FB1269272B020BAB00CE482D /* ProfileViewController.swift */,
 				FB1269212B020B6600CE482D /* PhotoViewerViewController.swift */,
+				FB0C5D552B48A35600141EFC /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				FB1DE2B32AFF81C700050355 /* AppDelegate.swift in Sources */,
 				FB1269282B020BAB00CE482D /* ProfileViewController.swift in Sources */,
 				FB1DE2B52AFF81C700050355 /* SceneDelegate.swift in Sources */,
+				FB0C5D562B48A35600141EFC /* ChatViewController.swift in Sources */,
 				FB1269222B020B6600CE482D /* PhotoViewerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
