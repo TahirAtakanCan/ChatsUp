@@ -27,7 +27,7 @@ extension DatabaseManager {
     
     public func userExists(with email: String, completion: @escaping (Bool)-> Void) {
         
-        var safeEmail = email.replacingOccurrences(of: ".", with: "-").replacingOccurrences(of: "@", with: "-")
+        let safeEmail = email.replacingOccurrences(of: ".", with: "-").replacingOccurrences(of: "@", with: "-")
         
         
         database.child(safeEmail).observeSingleEvent(of: .value, with: { snapshot in
