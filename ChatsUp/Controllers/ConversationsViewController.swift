@@ -37,14 +37,25 @@ class ConversationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
+                                                            target: self,
+                                                            action: #selector(didTapComposeButton))
+        
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
         setupTableView()
         fetchConversation()
         
         _ = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
-        //DatabaseManager.shared.test()
+        
     }
+    
+    @objc private func didTapComposeButton() {
+        let vc = NewConversaitonViewController()
+        let navVC = UINavigationController(rootViewController: vc)
+        present(navVC, animated: true)
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
