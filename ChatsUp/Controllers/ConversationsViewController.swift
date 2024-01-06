@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import JGProgressHUD
 
-class ConversationsViewController: UIViewController  {
+class ConversationsViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
     
@@ -17,7 +17,7 @@ class ConversationsViewController: UIViewController  {
     private let tableView: UITableView = {
         let table = UITableView()
         table.isHidden = true
-        table.register(UITableView.self, forCellReuseIdentifier: "cell")
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         return table
     }()
@@ -43,12 +43,14 @@ class ConversationsViewController: UIViewController  {
         fetchConversation()
         
         _ = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
-        
-        
-        
         //DatabaseManager.shared.test()
-        
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -76,7 +78,7 @@ class ConversationsViewController: UIViewController  {
     
     
     private func fetchConversation() {
-        
+        tableView.isHidden = false
     }
     
 }
@@ -91,6 +93,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = "Hello World"
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     

@@ -7,10 +7,14 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
+import JGProgressHUD
 
 
 class LoginViewController: UIViewController {
 
+    private let spinner = JGProgressHUD(style: .dark)
+    
     private let scrollView : UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -172,9 +176,17 @@ class LoginViewController: UIViewController {
                   alertUserLoginError()
                   return
               }
-        // Firebase
         
+        spinner.show(in: view)
+        
+        // Firebase Log In
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] AuthDataResult, error in
+            guard let strongSelf = self else {
+                return
+            }
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
             guard let strongSelf = self else {
                 return
             }
