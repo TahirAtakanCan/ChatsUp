@@ -12,10 +12,10 @@ import MessageKit
 
 
 struct Message: MessageType {
-    var sender: SenderType  // MessageKit.SenderType
+    var sender: SenderType
     var messageId: String
     var sentDate: Date
-    var kind: MessageKit.MessageKind
+    var kind: MessageKind
 }
 
 struct Sender: SenderType {
@@ -28,9 +28,25 @@ struct Sender: SenderType {
 
 
 class ChatViewController: MessagesViewController {
-
+    
+    private var messages = [Message]()
+    
+    private let selfSender = Sender(photoUrl: "",
+                                    senderId: "1",
+                                    displayName: "Atakan Can")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        messages.append(Message(sender: selfSender,
+                                messageId: UUID().uuidString,
+                               sentDate: Date(),
+                               kind: .text("Hello Chats Up World Message")))
+        messages.append(Message(sender: selfSender,
+                                messageId: UUID().uuidString,
+                               sentDate: Date(),
+                               kind: .text("Hello Chats Up World Message. Heeellooooo herkese merhabaaa")))
+        
         
         let blueGreenColor = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
         view.backgroundColor = blueGreenColor
@@ -39,21 +55,26 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         
+        DispatchQueue.main.async {
+                self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToLastItem(animated: true)
+            }
+        
     }
 }
 
 
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     var currentSender: MessageKit.SenderType {
-        <#code#>
+        return selfSender
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessageKit.MessagesCollectionView) -> MessageKit.MessageType {
-        <#code#>
+        return messages[indexPath.section]
     }
     
     func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
-        <#code#>
+        return messages.count
     }
     
     
