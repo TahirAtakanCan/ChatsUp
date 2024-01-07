@@ -179,6 +179,8 @@ class LoginViewController: UIViewController {
         
         spinner.show(in: view)
         
+        //Database...
+        
         // Firebase Log In
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] AuthDataResult, error in
             guard let strongSelf = self else {

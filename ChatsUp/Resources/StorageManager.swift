@@ -17,6 +17,10 @@ final class StorageManager {
     
     public typealias UploadPictureCompletion = (Result<String, Error>) -> Void
     
+    /*
+     /images/atkan4202-gmail-com_profile_picture.png
+     */
+    
     /// Uploads picture to firebase storage and returns completion with URL string to download
     public func uploadProfilePicture(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion ) {
     // @escaping (String) -> Void
