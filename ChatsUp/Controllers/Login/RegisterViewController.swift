@@ -235,7 +235,8 @@ class RegisterViewController: UIViewController {
             guard let strongSelf = self else {
                 return
             }
-            DispatchQueue.main.sync {
+            //sync switch
+            DispatchQueue.main.async {
                 strongSelf.spinner.dismiss()
             }
             guard !exists else {
@@ -380,13 +381,18 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         _ = info[UIImagePickerController.InfoKey.editedImage]
-        
+            if let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+                    imageView.image = selectedImage
+            }
+        picker.dismiss(animated: true, completion: nil)
         //print(info)
         
         // let selectedImage =
         
         // self.imageView.image = selectedImage
+        
     }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
