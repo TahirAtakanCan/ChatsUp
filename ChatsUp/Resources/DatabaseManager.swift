@@ -16,7 +16,11 @@ final class DatabaseManager{
     
     private let database = Database.database(url: "https://chatsupfirebase-79809-default-rtdb.europe-west1.firebasedatabase.app").reference()
     
-    
+    static func safeEmail(emailAddress: String) -> String {
+        var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
+        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        return safeEmail
+    }
     
 }
 
