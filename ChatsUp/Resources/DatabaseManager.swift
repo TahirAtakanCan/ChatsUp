@@ -57,9 +57,57 @@ extension DatabaseManager {
                 completion(false)
                 return
             }
+            
+            self.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+                if var usersCollection = snapshot.value as? [[String: String]] {
+                    // append to user dictionary
+                    let newElement = [
+                        "name": user.firstName + " " + user.lastName,
+                        "email": user.safeEmail
+                    ]
+                    usersCollection.append(newElement)
+                    
+                    self.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
+                        guard error == nil else {
+                            completion(false)
+                            return
+                        }
+                        completion(true)
+                    })
+                }
+                    // create that array
+                let newCollecttion: [[String: String]] = [
+                    [
+                        "name": user.firstName + " " + user.lastName,
+                        "email": user.safeEmail
+                    ]
+                ]
+                
+                self.database.child("users").setValue(newCollecttion, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                })
+            })
+            
             completion(true)
         })
     }
+    
+    /*
+     users -> [
+        [
+            "name":
+            "safe_email":
+        ],                      Bu şekil bir veritabanı düzeni
+        [
+            "name":
+            "safe_email":
+        ]
+     ]
+     */
     
     
 }
