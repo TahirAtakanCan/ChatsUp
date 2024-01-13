@@ -76,6 +76,7 @@ extension NewConversaitonViewController: UISearchBarDelegate {
         // check if array has firebase results
         if hasFetched{
             // if it does: filter
+            filterUsers(with: query)
         }
         else {
             // if not, fetch then filter
@@ -83,14 +84,26 @@ extension NewConversaitonViewController: UISearchBarDelegate {
                 switch result {
                 case.success(let usersCollection):
                     self?.users = usersCollection
+                    self?.filterUsers(with: query)
                 case .failure(let error):
                     print("Failed to get users:\(error)")
                 }
             })
         }
+    }
+    
+    func filterUsers(with term: String) {
         // update the UI: eitehr show results or show no results label
-        
-        
+        guard hasFetched else {
+            return
+        }
+        var results:[[String: String]] = self.users.filter({
+            guard let name = $0["name"]?.lowercased() else {
+                return false
+            }
+            return name.hasPrefix(term.lowercased())
+        })
+        self.results = results
     }
     
 }
