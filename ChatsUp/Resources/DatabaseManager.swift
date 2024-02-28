@@ -207,12 +207,28 @@ extension DatabaseManager {
             if var conversation = userNode["conversation"] as? [[String: Any]] {
                 // conversation array exists for current user
                 // you should append
+                conversation.append(newConversationData)
+                userNode["conversation"] = conversation
+                ref.setValue(userNode, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                })
             }
             else {
                 // create it
                 userNode["conversation"] = [
                     newConversationData
                 ]
+                ref.setValue(userNode, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                })
             }
         })
     }
