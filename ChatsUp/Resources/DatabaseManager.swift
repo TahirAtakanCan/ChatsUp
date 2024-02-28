@@ -121,6 +121,28 @@ extension DatabaseManager {
             "safe_email":
         ]
      ]
+     
+     
+     conversation => [
+        [
+            "conversation_id": "sdfsd"
+            "other_user_email":
+            "latest_message": => {
+                "date": Date()
+                "latest_message": "message"
+                "is_read": true/false
+            }
+     "sdfsd" {
+        "messages": [
+            {
+                "id": String,
+                "type": text,photo,video,
+                "content": String,
+                "date": Date(),
+                "sender_email": String,
+                "isRead": true/false,
+     }
+     
      */
     
     
@@ -132,7 +154,67 @@ extension DatabaseManager {
     
     /// Creates a new conversation with targer user email and first message sent
     public func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
-        
+        guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
+        let ref = database.child("\(safeEmail)")
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            guard var userNode = snapshot.value as? [String: Any] else {
+                completion(false)
+                print("user not found")
+                return
+            }
+            
+            let messageDate = firstMessage.sentDate
+            let dateString = ChatViewController.dateFormatter.string(from: messageDate)
+            
+            var message = ""
+            
+            switch firstMessage.kind {
+            case .text(let messageText):
+                message = messageText
+            case .attributedText(_):
+                break
+            case .photo(_):
+                break
+            case .video(_):
+                break
+            case .location(_):
+                break
+            case .emoji(_):
+                break
+            case .audio(_):
+                break
+            case .contact(_):
+                break
+            case .custom(_):
+                break
+            case .linkPreview(_):
+                break
+            }
+            
+            let newConversationData: [String: Any] = [
+                "id": "conversation_\(firstMessage.messageId)",
+                "other_user_email": otherUserEmail,
+                "latest_message": [
+                    "date": dateString,
+                    "message": message,
+                    "is_read": false
+                ]
+            ]
+            
+            if var conversation = userNode["conversation"] as? [[String: Any]] {
+                // conversation array exists for current user
+                // you should append
+            }
+            else {
+                // create it
+                userNode["conversation"] = [
+                    newConversationData
+                ]
+            }
+        })
     }
     
     /// Fetches and returns all conversation for the user with passed in email
