@@ -29,14 +29,27 @@ struct Sender: SenderType {
 
 class ChatViewController: MessagesViewController {
     
+    public static let dateFormatter: DateFormatter = {
+        let formattre = DateFormatter()
+        formattre.dateStyle = .medium
+        formattre.timeStyle = .long
+        formattre.locale = .current
+        return formattre
+    }()
+    
     public let otherUserEmail: String
     public var isNewConversation = false
     
     private var messages = [Message]()
     
-    private let selfSender = Sender(photoUrl: "",
-                                    senderId: "1",
-                                    displayName: "Atakan Can")
+    private var selfSender: Sender? {
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+            return nil
+        }
+        return Sender(photoUrl: "",
+        senderId: email,
+        displayName: "")
+    }
     
     init(with email: String) {
         self.otherUserEmail = email
@@ -89,7 +102,9 @@ class ChatViewController: MessagesViewController {
 extension ChatViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        guard !text.replacingOccurrences(of: "", with: "").isEmpty else {
+        guard !text.replacingOccurrences(of: "", with: "").isEmpty,
+        let selfSender = self.selfSender,
+        let messageId = createMessageId() else{
             return
         }
         
@@ -98,10 +113,33 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         //Send Message
         if isNewConversation {
             //create convo in database
+            let mmessage = Message(sender: selfSender,
+                                  messageId: messageId,
+                                  sentDate: Date(),
+                                  kind: .text(text))
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, firstMessage: mmessage, completion: {[weak self] success in
+                if success {
+                    print("Message sent")
+                }
+                else {
+                    print("failed ot send")
+                }
+            })
         }
         else {
             //append to exiting conversation
         }
+    }
+    
+    private func createMessageId() -> String? {
+        // date, otherUserEmail, senderEmail, randomInt
+        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") else {
+            return nil
+        }
+        let dateString = Self.dateFormatter.string(from: Date())
+        let newIdentifier = "\(otherUserEmail)_ \(currentUserEmail)"
+        
+        return newIdentifier
     }
     
 }
@@ -109,7 +147,13 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     var currentSender: MessageKit.SenderType {
-        return selfSender
+        if let sender = selfSender {
+            return sender
+        }
+        fatalError("Self Sender  is nil, email should be cached")
+        return Sender(photoUrl: "",
+                      senderId: "12",
+                      displayName: "")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessageKit.MessagesCollectionView) -> MessageKit.MessageType {

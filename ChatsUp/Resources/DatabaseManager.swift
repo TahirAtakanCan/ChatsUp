@@ -115,7 +115,7 @@ extension DatabaseManager {
         [
             "name":
             "safe_email":
-        ],                      Bu şekil bir veritabanı düzeni
+        ],                      Database Design
         [
             "name":
             "safe_email":
@@ -131,7 +131,7 @@ extension DatabaseManager {
 extension DatabaseManager {
     
     /// Creates a new conversation with targer user email and first message sent
-    public func createNewConversation(with otherUserEmail: String, firstMessage: String, completion: @escaping (Bool) -> Void) {
+    public func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
         
     }
     
@@ -140,8 +140,13 @@ extension DatabaseManager {
         
     }
     
-    /// 
+    ///  Gets all messages for a given conversation
     public func getAllMessagesForConversation(with id: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+    }
+    
+    /// Sends a message with target conversation and message
+    public func sendMessage(to conversation: String, message: Message, completion: @escaping (Bool) -> Void) {
         
     }
 }
