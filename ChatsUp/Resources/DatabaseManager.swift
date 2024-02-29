@@ -268,7 +268,7 @@ extension DatabaseManager {
             break
         case .custom(_):
             break
-        case .linkPreview(_):
+        case .linkPreview(_):   //clear
             break
         }
         guard let myEmail = UserDefaults.standard.value(forKey: "email") as? String else {
