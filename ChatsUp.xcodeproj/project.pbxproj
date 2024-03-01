@@ -57,6 +57,7 @@
 		FB1DE2BF2AFF81C800050355 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB1DE2BD2AFF81C800050355 /* LaunchScreen.storyboard */; };
 		FB4032AA2B2F8290008E50DE /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4032A92B2F8290008E50DE /* DatabaseManager.swift */; };
 		FBE3549F2B4ABD5A00DC177B /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE3549E2B4ABD5A00DC177B /* StorageManager.swift */; };
+		FBE649E32B90896200AE3FA9 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE649E22B90896200AE3FA9 /* ConversationTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		FB1DE2C02AFF81C800050355 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB4032A92B2F8290008E50DE /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		FBE3549E2B4ABD5A00DC177B /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		FBE649E22B90896200AE3FA9 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			children = (
 				FB1DE2BB2AFF81C800050355 /* Assets.xcassets */,
 				FB12691C2B02099000CE482D /* Stroyboards */,
+				FBE649E22B90896200AE3FA9 /* ConversationTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				FB1DE2B32AFF81C700050355 /* AppDelegate.swift in Sources */,
 				FB1269282B020BAB00CE482D /* ProfileViewController.swift in Sources */,
 				FB1DE2B52AFF81C700050355 /* SceneDelegate.swift in Sources */,
+				FBE649E32B90896200AE3FA9 /* ConversationTableViewCell.swift in Sources */,
 				FB0C5D562B48A35600141EFC /* ChatViewController.swift in Sources */,
 				FB1269222B020B6600CE482D /* PhotoViewerViewController.swift in Sources */,
 				FBE3549F2B4ABD5A00DC177B /* StorageManager.swift in Sources */,
