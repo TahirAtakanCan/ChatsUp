@@ -308,8 +308,10 @@ extension DatabaseManager {
     }
     
     /// Fetches and returns all conversation for the user with passed in email
-    public func getAllConversation(for email: String, completion: @escaping (Result<String, Error>) -> Void) {
-        
+    public func getAllConversation(for email: String, completion: @escaping (Result<[Conversation], Error>) -> Void) {
+        database.child("\(email)/conversation").observe(.value, with: { snapshot in
+            
+        })
     }
     
     ///  Gets all messages for a given conversation

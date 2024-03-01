@@ -64,7 +64,23 @@ class ConversationsViewController: UIViewController {
         
     }
     
-    
+    private func startListeningForConversations(){
+        guard let email = UserDefaults.standard.value(forKey: "email")  as? String else {
+            return
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        DatabaseManager.shared.getAllConversation(for: safeEmail, completion: { [weak self] result in
+            switch result {
+            case.success(let conversations):
+                guard !conversations.isEmpty else {
+                    return
+                }
+                self?.conversations = conversations
+            case.failure(let error):
+                print("failed to get conversation: \(error)")
+            }
+        })
+    }
     
     @objc private func didTapComposeButton() {
         let vc = NewConversaitonViewController()
