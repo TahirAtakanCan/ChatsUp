@@ -68,10 +68,12 @@ class ConversationsViewController: UIViewController {
         guard let email = UserDefaults.standard.value(forKey: "email")  as? String else {
             return
         }
+        print("starting conversaiton fetch...")
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         DatabaseManager.shared.getAllConversation(for: safeEmail, completion: { [weak self] result in
             switch result {
             case.success(let conversations):
+                print("successfully got conversaiton models")
                 guard !conversations.isEmpty else {
                     return
                 }
@@ -104,7 +106,7 @@ class ConversationsViewController: UIViewController {
         }
         
         
-        let vc = ChatViewController(with: email)
+        let vc = ChatViewController(with: email, id: nil)
         vc.isNewConversation = true
         vc.title = name
         vc.navigationItem.largeTitleDisplayMode = .never
@@ -168,7 +170,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         tableView.deselectRow(at: indexPath, animated: true)
         let model = conversations[indexPath.row]
         
-        let vc = ChatViewController(with: model.otherUserEmail)
+        let vc = ChatViewController(with: model.otherUserEmail, id: model.id)
         vc.title = model.name
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
