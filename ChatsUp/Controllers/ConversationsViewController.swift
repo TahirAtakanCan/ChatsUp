@@ -59,6 +59,7 @@ class ConversationsViewController: UIViewController {
         view.addSubview(noConversationsLabel)
         setupTableView()
         fetchConversation()
+        startListeningForConversations()
         
         _ = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
         
@@ -69,8 +70,8 @@ class ConversationsViewController: UIViewController {
             return
         }
         print("starting conversaiton fetch...")
-        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-        DatabaseManager.shared.getAllConversation(for: safeEmail, completion: { [weak self] result in
+        let getSafeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        DatabaseManager.shared.getAllConversation(for: getSafeEmail, completion: { [weak self] result in
             switch result {
             case.success(let conversations):
                 print("successfully got conversaiton models")
