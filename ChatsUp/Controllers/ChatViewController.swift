@@ -8,7 +8,7 @@
 import UIKit
 import MessageKit
 import InputBarAccessoryView
-
+import SDWebImage
 
 
 struct Message: MessageType {
@@ -53,6 +53,13 @@ struct Sender: SenderType {
    public var displayName: String
 }
 
+
+struct Media: MediaItem {
+    var url: URL?
+    var image: UIImage?
+    var placeholderImage: UIImage
+    var size: CGSize
+}
 
 class ChatViewController: MessagesViewController {
     
@@ -111,7 +118,7 @@ class ChatViewController: MessagesViewController {
     private func setupInputButton() {
         let button = InputBarButtonItem()
         button.setSize(CGSize(width: 35, height: 35), animated: false)
-        button.setImage(UIImage(systemName: "plus.circle"), for: .normal)
+        button.setImage(UIImage(systemName: "paperclip"), for: .normal)
         button.onTouchUpInside { [weak self] _ in
             self?.presentInputActionSheet()
         }
@@ -122,7 +129,34 @@ class ChatViewController: MessagesViewController {
     }
     
     private func presentInputActionSheet(){
+        presentPhotoInputActionSheet()
+    }
+    
+    private func presentPhotoInputActionSheet() {
+        let actionSheet = UIAlertController(title: "Attach Photo",
+                                            message: "Where would you like to attach a photo from ?",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
+            
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.delegate = self
+            picker.allowsEditing = true
+            self?.present(picker, animated: true)
+            
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { [weak self] _ in
+            
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = self
+            picker.allowsEditing = true
+            self?.present(picker, animated: true)
+            
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil ))
         
+        present(actionSheet, animated: true)
     }
     
     
@@ -155,6 +189,71 @@ class ChatViewController: MessagesViewController {
         }
     }
     
+}
+
+
+extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+   
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage,
+        let imageData = image.pngData(),
+        let messageId = createMessageId(),
+        let conversationId = conversationId,
+        let name = self.title,
+        let selfSender = selfSender else {
+            return
+        }
+        // photo url
+        let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".png"
+        //Upload Image
+        
+        StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName, completion: { [weak self] result in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            switch result {
+            case .success(let urlString):
+                print("Uploaded message Photo: \(urlString)")
+                
+                guard let url = URL(string: urlString),
+                      let placeholder = UIImage(systemName: "plus.circle") else {
+                    return
+                }
+                
+                let media = Media(url: url,
+                                  image: nil,
+                                  placeholderImage: placeholder,
+                                  size: .zero)
+                
+                let message = Message(sender: selfSender,
+                                      messageId: messageId,
+                                      sentDate: Date(),
+                                      kind: .photo(media))
+                
+                DatabaseManager.shared.sendMessage(to: conversationId, name: name, otherUserEmail: strongSelf.otherUserEmail, newMessage: message, completion: { success in
+                    
+                    if success {
+                        print("sent photo message")
+                    }
+                    else {
+                        print("failed to send photo message")
+                    }
+                    
+                })
+                
+            case .failure(let error):
+                print("message photo upload error: \(error)")
+            }
+        })
+        
+        //Send Image
+    }
 }
 
 
@@ -217,7 +316,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     
 }
 
-
+// Mesaj ve Resimleri Gösterme
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     var currentSender: any MessageKit.SenderType {
         if let sender = selfSender {
@@ -232,6 +331,22 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
     
     func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
         return self.messages.count
+    }
+    
+    func configureMediaMessageImageView(_ imageView: UIImageView, for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        guard let message = message as? Message else {
+            return
+        }
+        
+        switch message.kind{
+        case .photo(let media):
+            guard let imageUrl = media.url else {
+                return
+            }
+            imageView.sd_setImage(with: imageUrl, completed: nil)
+        default:
+            break
+        }
     }
 }
 
