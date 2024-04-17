@@ -104,9 +104,27 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         //messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
-        
+        setupInputButton()
         
     }
+    // keyboard plus button
+    private func setupInputButton() {
+        let button = InputBarButtonItem()
+        button.setSize(CGSize(width: 35, height: 35), animated: false)
+        button.setImage(UIImage(systemName: "plus.circle"), for: .normal)
+        button.onTouchUpInside { [weak self] _ in
+            self?.presentInputActionSheet()
+        }
+        
+        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
+        messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
+        
+    }
+    
+    private func presentInputActionSheet(){
+        
+    }
+    
     
     private func listenForMessages(id: String, shouldScrollToBottom: Bool){
         DatabaseManager.shared.getAllMessagesForConversation(with: id, completion: { [weak self] result in
