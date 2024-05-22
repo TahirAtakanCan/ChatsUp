@@ -185,10 +185,10 @@ class ChatViewController: MessagesViewController {
             DatabaseManager.shared.sendMessage(to: conversationId, name: name, otherUserEmail: strongSelf.otherUserEmail, newMessage: message, completion: { success in
                 
                 if success {
-                    print("sent photo message")
+                    print("sent location message")
                 }
                 else {
-                    print("failed to send photo message")
+                    print("failed to send location message")
                 }
                 
             })
