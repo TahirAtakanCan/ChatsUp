@@ -48,6 +48,11 @@ class LocationPickerViewController: UIViewController {
         let coordinates = map.convert(locationInView, toCoordinateFrom: map)
         self.coordinates = coordinates
         
+        for annotation in map.annotations {
+            map.removeAnnotation(annotation)
+        }
+        
+        //drop a pin on that location
         let pin = MKPointAnnotation()
         pin.coordinate = coordinates
         map.addAnnotation(pin)
@@ -55,7 +60,7 @@ class LocationPickerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //map = view.bounds
+        map.frame = view.bounds
     }
     
 }
