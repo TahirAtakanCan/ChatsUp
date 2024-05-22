@@ -11,12 +11,18 @@ import InputBarAccessoryView
 import SDWebImage
 import AVFoundation
 import AVKit
+import CoreLocation
 
 struct Message: MessageType {
    public var sender: SenderType
    public var messageId: String
    public var sentDate: Date
    public var kind: MessageKind
+}
+
+struct Location: LocationItem {
+    var location: CLLocation
+    var size: CGSize
 }
 
 
@@ -142,11 +148,17 @@ class ChatViewController: MessagesViewController {
             actionsheet.addAction(UIAlertAction(title: "Audio", style: .default, handler: {  _ in
                 
             }))
-            actionsheet.addAction(UIAlertAction(title: "Location", style: .default, handler: {  _ in
-                //self?.presentLocationPicker()
+            actionsheet.addAction(UIAlertAction(title: "Location", style: .default, handler: { [weak self] _ in
+                self?.presentLocationPicker()
             }))
             actionsheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             present(actionsheet, animated: true)
+    }
+    
+    private func presentLocationPicker() {
+        
+        
+        
     }
     
     private func presentPhotoInputActionSheet() {

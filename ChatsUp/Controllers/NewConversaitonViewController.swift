@@ -51,7 +51,7 @@ class NewConversaitonViewController: UIViewController {
         
         searchBar.delegate = self
         let blueGreenColor = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
-        view.backgroundColor = blueGreenColor
+        view.backgroundColor = .systemBackground
         
         navigationController?.navigationBar.topItem?.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "cancel",
