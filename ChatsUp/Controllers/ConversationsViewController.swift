@@ -58,7 +58,7 @@ class ConversationsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
         setupTableView()
-        fetchConversation()
+        
         startListeningForConversations()
         
         _ = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
@@ -76,8 +76,12 @@ class ConversationsViewController: UIViewController {
             case.success(let conversations):
                 print("successfully got conversaiton models")
                 guard !conversations.isEmpty else {
+                    self?.tableView.isHidden = true
+                    self?.noConversationsLabel.isHidden = false
                     return
                 }
+                self?.noConversationsLabel.isHidden = true
+                self?.tableView.isHidden = false
                 self?.conversations = conversations
                 
                 DispatchQueue.main.async {
@@ -85,6 +89,8 @@ class ConversationsViewController: UIViewController {
                 }
                 
             case.failure(let error):
+                self?.tableView.isHidden = true
+                self?.noConversationsLabel.isHidden = false
                 print("failed to get conversation: \(error)")
             }
         })
@@ -150,6 +156,10 @@ class ConversationsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        noConversationsLabel.frame = CGRect(x: 10,
+                                            y: (view.height-100)/2,
+                                            width: view.width-20,
+                                            height: 100)
     }
     
     
@@ -175,11 +185,6 @@ class ConversationsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-    }
-    
-    
-    private func fetchConversation() {
-        tableView.isHidden = false
     }
     
 }
